@@ -1,0 +1,32 @@
+{
+  "@@locale": "th",
+  "appTitle": "สถิตินักว่ายน้ำ",
+  "homePageTitle": "นักกีฬา",
+  "addAthlete": "เพิ่มนักกีฬา",
+  "addAthletePageTitle": "เพิ่มนักกีฬาใหม่",
+  "athleteName": "ชื่อนักกีฬา",
+  "weight": "น้ำหนัก",
+  "height": "ส่วนสูง",
+  "dateOfBirth": "วันเกิด",
+  "save": "บันทึก",
+  "cancel": "ยกเลิก",
+  "performanceRecords": "บันทึกสถิติ",
+  "addPerformance": "เพิ่มสถิติ",
+  "addPerformancePageTitle": "เพิ่มสถิติใหม่",
+  "selectStroke": "เลือกประเภทท่าว่าย",
+  "distance": "ระยะทาง (เมตร)",
+  "time": "เวลา (ชม.:นาที:วินาที.มิลลิวินาที)",
+  "toggleTheme": "สลับธีม",
+  "settings": "ตั้งค่า",
+  "language": "ภาษา",
+  "english": "อังกฤษ",
+  "thai": "ไทย",
+  "useSystemLanguage": "ใช้ภาษาของระบบ",
+  "athleteSubtitle": "อายุ: {age}, น้ำหนัก: {weight} กก.",
+  "@athleteSubtitle": {
+    "placeholders": {
+      "age": {},
+      "weight": {}
+    }
+  }
+}

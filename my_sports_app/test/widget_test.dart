@@ -8,23 +8,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_sports_app/main.dart';
+// แก้ไข import path ให้ถูกต้อง
+import 'package:my_sports_app/main.dart'; // <<<<<<<<<<<<<<<< แก้ไขตรงนี้!
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  // เนื่องจากโค้ดทดสอบนี้เป็นของแอป Counter เก่า
+  // คุณสามารถลบมันทิ้งไปก่อนได้ หรือจะเขียนโค้ดทดสอบใหม่สำหรับแอปของคุณในอนาคต
+  // สำหรับตอนนี้ ผมแนะนำให้ลบออกไปก่อน เพื่อให้แอปสามารถรันได้โดยไม่มีปัญหาจาก Test
+  testWidgets('App starts and shows Athletes title',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the app title is displayed (assuming it's "Athletes" or "นักกีฬา")
+    // Note: This test relies on the default language (English in this case, "Athletes")
+    // For a more robust test, you might need to mock localization.
+    expect(find.text('Athletes'),
+        findsOneWidget); // ตรวจสอบว่ามีข้อความ "Athletes"
+    expect(
+        find.byIcon(Icons.add), findsOneWidget); // ตรวจสอบว่ามีปุ่มเพิ่มนักกีฬา
+    expect(
+        find.byIcon(Icons.brightness_4), findsOneWidget); // ตรวจสอบปุ่มสลับธีม
+    expect(find.byIcon(Icons.language), findsOneWidget); // ตรวจสอบปุ่มภาษา
   });
 }

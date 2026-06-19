@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "Swimmer Stats",
+  "homePageTitle": "Athletes",
+  "addAthlete": "Add Athlete",
+  "addAthletePageTitle": "Add New Athlete",
+  "athleteName": "Athlete Name",
+  "weight": "Weight",
+  "height": "Height",
+  "dateOfBirth": "Date of Birth",
+  "save": "Save",
+  "cancel": "Cancel",
+  "performanceRecords": "Performance Records",
+  "addPerformance": "Add Performance",
+  "addPerformancePageTitle": "Add New Performance",
+  "selectStroke": "Select Stroke Type",
+  "distance": "Distance (meters)",
+  "time": "Time (HH:MM:SS.ms)",
+  "toggleTheme": "Toggle Theme",
+  "settings": "Settings",
+  "language": "Language",
+  "english": "English",
+  "thai": "Thai",
+  "useSystemLanguage": "Use System Language",
+  "athleteSubtitle": "Age: {age}, Weight: {weight} kg",
+  "@athleteSubtitle": {
+    "placeholders": {
+      "age": {},
+      "weight": {}
+    }
+  }
+}

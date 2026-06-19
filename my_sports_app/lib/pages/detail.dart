@@ -321,20 +321,22 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
+            // <<<<<<<<<<<< เพิ่มปุ่มสำหรับไปหน้าถัดไป <<<<<<<<<<<<
             SliverToBoxAdapter(
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // ใช้ Navigator.of(context).push() เพื่อไปยัง NextPage
-                    Navigator.of(context).push(
+                    // ใช้ Navigator.push เพื่อไปยัง NextPage
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(builder: (context) => const NextPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue, // สีปุ่ม
+                    foregroundColor: Colors.white, // สีข้อความบนปุ่ม
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -345,23 +347,12 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
+            // >>>>>>>>>>>>>>>>>> สิ้นสุดการเพิ่มปุ่ม >>>>>>>>>>>>>>>>>>>>>>>>>>
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   final person = people[index];
-                  return PersonListItem(
-                    person: person,
-                    onTap: () {
-                      print(
-                          'Tapped on: ${person['firstName']} ${person['lastName']}');
-                      // <<<<<<<<<<<< ใช้ Navigator.of(context).push() ตรงนี้ <<<<<<<<<<<<
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => DetailPage(person: person)),
-                      );
-                      // >>>>>>>>>>>>>>>>>> สิ้นสุดการแก้ไข <<<<<<<<<<<<<<
-                    },
-                  );
+                  return PersonListItem(person: person);
                 },
                 childCount: people.length,
               ),
@@ -403,20 +394,14 @@ class _MyAppState extends State<MyApp> {
 
 class PersonListItem extends StatelessWidget {
   final Map<String, dynamic> person;
-  final VoidCallback? onTap;
 
   const PersonListItem({
     super.key,
     required this.person,
-    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isMale = person['gender']?.toString().trim().toLowerCase() == 'ชาย';
-    final avatarBackgroundColor =
-        isMale ? Colors.blue.withOpacity(0.1) : Colors.pink.withOpacity(0.1);
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -448,7 +433,7 @@ class PersonListItem extends StatelessWidget {
               const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
           leading: CircleAvatar(
             radius: 30,
-            backgroundColor: avatarBackgroundColor,
+            backgroundColor: Colors.blue.withOpacity(0.1),
             child: Text(
               person['firstName'] != null && person['firstName'].isNotEmpty
                   ? person['firstName'][0].toUpperCase()
@@ -462,13 +447,16 @@ class PersonListItem extends StatelessWidget {
             'อายุ: ${person['age']} ปี, น้ำหนัก: ${person['weight']} กก.',
           ),
           trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: onTap,
+          onTap: () {
+            print('Tapped on: ${person['firstName']} ${person['lastName']}');
+          },
         ),
       ),
     );
   }
 }
 
+// <<<<<<<<<<<< หน้าใหม่ (NextPage) <<<<<<<<<<<<
 class NextPage extends StatelessWidget {
   const NextPage({super.key});
 
@@ -491,6 +479,7 @@ class NextPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                // ใช้ Navigator.pop เพื่อกลับไปหน้าก่อนหน้า
                 Navigator.pop(context);
               },
               child: const Text('กลับไปหน้าหลัก'),
@@ -501,124 +490,4 @@ class NextPage extends StatelessWidget {
     );
   }
 }
-
-class DetailPage extends StatelessWidget {
-  final Map<String, dynamic> person;
-
-  const DetailPage({super.key, required this.person});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMale = person['gender']?.toString().trim().toLowerCase() == 'ชาย';
-    final genderColor = isMale ? Colors.blue : Colors.pink;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${person['firstName']} ${person['lastName']}'),
-        backgroundColor: genderColor,
-        foregroundColor: Colors.white,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundColor: isMale
-                      ? Colors.blue.withOpacity(0.1)
-                      : Colors.pink.withOpacity(0.1),
-                  child: Text(
-                    person['firstName'] != null &&
-                            person['firstName'].isNotEmpty
-                        ? person['firstName'][0].toUpperCase()
-                        : '?',
-                    style: TextStyle(
-                        color: genderColor,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${person['firstName']} ${person['lastName']}',
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'น้ำหนัก: ${person['weight']} กก. เพศ: ${person['gender']}',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildSocialIcon(Icons.telegram, 'telegram', Colors.blue),
-                _buildSocialIcon(Icons.facebook, 'facebook', Colors.blue),
-                _buildSocialIcon(Icons.line_weight, 'line', Colors.green),
-                _buildSocialIcon(Icons.camera_alt, 'instagram', Colors.pink),
-              ],
-            ),
-            const SizedBox(height: 30),
-            Text('ชื่อ: ${person['firstName']}',
-                style: const TextStyle(fontSize: 18)),
-            Text('นามสกุล: ${person['lastName']}',
-                style: const TextStyle(fontSize: 18)),
-            Text('อายุ: ${person['age']} ปี',
-                style: const TextStyle(fontSize: 18)),
-            Text('น้ำหนัก: ${person['weight']} กก.',
-                style: const TextStyle(fontSize: 18)),
-            Text('เพศ: ${person['gender']}',
-                style: TextStyle(fontSize: 18, color: genderColor)),
-            const SizedBox(height: 30),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('กลับไปหน้ารายการ'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Helper method to build a social media icon widget
-  Widget _buildSocialIcon(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
-            icon,
-            color: color,
-            size: 40,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(fontSize: 12, color: color),
-        ),
-      ],
-    );
-  }
-}
+// >>>>>>>>>>>>>>>>>> สิ้นสุดหน้าใหม่ <<<<<<<<<<<<<<
